@@ -55,19 +55,18 @@ void ceasarcipher(string msg){
  //4
  void vernam(string msg){
   int n = msg.length();
-  string key;
-for (int i = 0; i < n; ++i) {
-key += (char)(rand() % 26 + 'A'); 
-}
+   string key;
+  cout<<"Enter key : "<<endl;
+  cin>>key;
 string ciphertext;
 for (int i = 0; i < n; ++i) {
-char encryptedChar = msg[i] ^ key[i];
+char encryptedChar = msg[i] ^ key[i%key.size()];
 ciphertext += encryptedChar;
 }
  cout<<"Encrypted Message : "<<ciphertext<<endl;
  string decrypt;
 for (int i = 0; i < n; ++i) {
-char decryptedChar = ciphertext[i] ^ key[i];
+char decryptedChar = ciphertext[i] ^ key[i%key.size()];
  decrypt += decryptedChar;
 }
  cout<<"Decrypted Message : "<<decrypt<<endl;
