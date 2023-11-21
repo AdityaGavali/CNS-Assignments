@@ -29,7 +29,7 @@ int main()
     // Calculating digital signature
     long long s1;
     s1 = ((long long)pow(alpha, k)) % p;
-    cout << "Sigital signature s1: " << s1 << endl;
+    cout << "Digital signature s1: " << s1 << endl;
 
     long long k_inverse;
     for (long long i = 1; i < p - 1; i++)
