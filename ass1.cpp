@@ -50,6 +50,28 @@ void ceasarcipher(string msg){
   return;
  }  
 
+ //3
+ void vernam(string msg){
+  int n = msg.length();
+  string key;
+for (int i = 0; i < n; ++i) {
+key += (char)(rand() % 26 + 'A'); 
+}
+string ciphertext;
+for (int i = 0; i < n; ++i) {
+char encryptedChar = msg[i] ^ key[i];
+ciphertext += encryptedChar;
+}
+ cout<<"Encrypted Message : "<<ciphertext<<endl;
+ string decrypt;
+for (int i = 0; i < n; ++i) {
+char decryptedChar = ciphertext[i] ^ key[i];
+ decrypt += decryptedChar;
+}
+ cout<<"Decrypted Message : "<<decrypt<<endl;
+ return;
+ }
+
 int main(){
 
     cout<<"Enter the message :\n";
@@ -70,6 +92,9 @@ int main(){
     }
     if(choice == 2){
         monoalphabetic(msg);
+    }
+    if(choice == 4){
+      vernam(msg);
     }
 return 0;
 }
