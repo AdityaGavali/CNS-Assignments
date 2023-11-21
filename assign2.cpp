@@ -1,54 +1,57 @@
-#include<iostream>
-#include<math.h>
-// please add calculating time functionality by yourself 🙏
+#include <bits/stdc++.h>
+#include <chrono>
+
 using namespace std;
-// find gcd
-int gcd(int a, int b) {
-   int t;
-   while(1) {
-      t= a%b;
-      if(t==0)
-      return b;
-      a = b;
-      b= t;
-   }
+
+#define int long long
+
+int binpow(int a,int b,int m){
+    a%=m;
+    int res=1;
+    while(b){
+        if(b&1)
+            res=(res*a)%m;
+        a=(a*a)%m;
+        b/=2;
+    }
+    return res;
 }
-int main() {
-   //2 random prime numbers
-   double p = 3;
-   double q = 11;
-   double n=p*q;//calculate n
-   double track;
-   double phi= (p-1)*(q-1);//calculate phi
-   //public key
-   //e stands for encrypt
-   double e=7;
-   //for checking that 1 < e < phi(n) and gcd(e, phi(n)) = 1; i.e., e and phi(n) are coprime.
-   while(e<phi) {
-      track = gcd(e,phi);
-      if(track==1)
-         break;
-      else
-         e++;
-   }
-   //private key
-   //d stands for decrypt
-   //choosing d such that it satisfies d*e = 1 mod phi
-   double d1=1/e;
-   double d=fmod(d1,phi);
-   double message = 31;
-   double c = pow(message,e); //encrypt the message
-   double m = pow(c,d);
-   c=fmod(c,n);
-   m=fmod(m,n);
-   cout<<"Original Message = "<<message;
-   cout<<"\n"<<"p = "<<p;
-   cout<<"\n"<<"q = "<<q;
-   cout<<"\n"<<"n = pq = "<<n;
-   cout<<"\n"<<"phi = "<<phi;
-   cout<<"\n"<<"e = "<<e;
-   cout<<"\n"<<"d = "<<d;
-   cout<<"\n"<<"Encrypted message = "<<c;
-   cout<<"\n"<<"Decrypted message = "<<m;
-   return 0;
+
+int encrypt(int m,int e,int n){
+    return binpow(m,e,n);
+}
+
+int decrypt(int c,int d,int n){
+    return binpow(c,d,n);
+}
+
+int32_t main() {
+    auto key_gen_start=chrono::steady_clock::now();
+    int p=3,q=7;
+    int n=p*q;
+    int phiN=(p-1)*(q-1);
+    cout<<"n = "<<n<<'\n';
+    cout<<"phiN = "<<phiN<<'\n';
+    int e,d;
+    for(e=2;e<phiN and __gcd(e,phiN)!=1;e++);
+    cout<<"e = "<<e<<'\n';
+    for(d=0;(d*e)%phiN != 1;d++);
+    cout<<"d = "<<d<<'\n';
+    auto key_gen_end=chrono::steady_clock::now();
+    auto key_gen_diff=key_gen_end-key_gen_start;
+    cout<<"Key generation time: "<<chrono::duration <double, milli> (key_gen_diff).count()<<" ms\n";
+    int m;
+    cout<<"Enter input length less than "<<n<<": \n";
+    cin>>m;
+    auto encryption_start=chrono::steady_clock::now();
+    int c=encrypt(m,e,n);
+    cout<<"Encrypted text: "<<c<<'\n';
+    auto encryption_end=chrono::steady_clock::now();
+    auto encryption_diff=encryption_end-encryption_start;
+    cout<<"Encryption time: "<<chrono::duration <double, milli> (encryption_diff).count()<<" ms\n";
+    auto decryption_start=chrono::steady_clock::now();
+    cout<<"Decrypted text: "<<decrypt(c,d,n)<<'\n';
+    auto decryption_end=chrono::steady_clock::now();
+    auto decryption_diff=decryption_end-decryption_start;
+    cout<<"Decryption time: "<<chrono::duration <double, milli> (decryption_diff).count()<<" ms\n";
 }

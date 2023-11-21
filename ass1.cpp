@@ -49,8 +49,10 @@ void ceasarcipher(string msg){
   cout<<"Decrypted Messaeg : "<<decrypt<<endl;
   return;
  }  
+//3
 
- //3
+
+ //4
  void vernam(string msg){
   int n = msg.length();
   string key;
@@ -71,6 +73,9 @@ char decryptedChar = ciphertext[i] ^ key[i];
  cout<<"Decrypted Message : "<<decrypt<<endl;
  return;
  }
+
+//5 
+
 
 int main(){
 
