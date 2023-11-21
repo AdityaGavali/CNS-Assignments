@@ -50,30 +50,6 @@ void ceasarcipher(string msg){
   return;
  }  
 //3
-
-
- //4
- void vernam(string msg){
-  int n = msg.length();
-   string key;
-  cout<<"Enter key : "<<endl;
-  cin>>key;
-string ciphertext;
-for (int i = 0; i < n; ++i) {
-char encryptedChar = msg[i] ^ key[i%key.size()];
-ciphertext += encryptedChar;
-}
- cout<<"Encrypted Message : "<<ciphertext<<endl;
- string decrypt;
-for (int i = 0; i < n; ++i) {
-char decryptedChar = ciphertext[i] ^ key[i%key.size()];
- decrypt += decryptedChar;
-}
- cout<<"Decrypted Message : "<<decrypt<<endl;
- return;
- }
-
-//5 
 void vegnere(string msg){
   cout<<"Enter the Key"<<endl;
   string key;
@@ -118,6 +94,30 @@ void vegnere(string msg){
     cout<<"Decrypted Message : "<<decrypted_text<<endl;
     return;
 }
+
+ //4
+ void vernam(string msg){
+  int n = msg.length();
+   string key;
+  cout<<"Enter key : "<<endl;
+  cin>>key;
+string ciphertext;
+for (int i = 0; i < n; ++i) {
+char encryptedChar = msg[i] ^ key[i%key.size()];
+ciphertext += encryptedChar;
+}
+ cout<<"Encrypted Message : "<<ciphertext<<endl;
+ string decrypt;
+for (int i = 0; i < n; ++i) {
+char decryptedChar = ciphertext[i] ^ key[i%key.size()];
+ decrypt += decryptedChar;
+}
+ cout<<"Decrypted Message : "<<decrypt<<endl;
+ return;
+ }
+
+//5 
+
 void Railfence(string msg){
   int railCount;
   cout<<"Enter number of rails : \n";
