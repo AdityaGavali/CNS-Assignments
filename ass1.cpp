@@ -74,7 +74,107 @@ char decryptedChar = ciphertext[i] ^ key[i%key.size()];
  }
 
 //5 
-
+void vegnere(string msg){
+  cout<<"Enter the Key"<<endl;
+  string key;
+  cin>>key;
+   string encrypted_text = "";
+    string extended_key = key;
+    while (extended_key.length() < msg.length())
+        extended_key += key;
+    for (int i = 0; i < msg.length(); ++i) {
+        char c = msg[i];
+        if (isalpha(c)) {
+            char ch='A';
+            if(islower(c))
+                ch='a';
+            int shift = extended_key[i] - 'A';
+            if(islower(extended_key[i]))
+                shift = extended_key[i] - 'a';
+            char encrypted_char = ch+((c-ch+shift)%26);
+            encrypted_text += encrypted_char;
+        } else {
+            encrypted_text += c;
+        }
+    }
+    cout<<"Encrypted Message : "<<encrypted_text<<endl;
+    string cipher = encrypted_text;
+     string decrypted_text = "";
+    for (int i = 0; i < cipher.length(); ++i) {
+        char c = cipher[i];
+        if (isalpha(c)) {
+            char ch='A';
+            if(islower(c))
+                ch='a';
+            int shift = extended_key[i] - 'A';
+            if(islower(extended_key[i]))
+                shift = extended_key[i] - 'a';
+            char encrypted_char = ch+((c-ch-shift+26)%26);
+            decrypted_text += encrypted_char;
+        } else {
+            decrypted_text += c;
+        }
+    }
+    cout<<"Decrypted Message : "<<decrypted_text<<endl;
+    return;
+}
+void Railfence(string msg){
+  int railCount;
+  cout<<"Enter number of rails : \n";
+  cin>>railCount;
+  vector<string> rails(railCount, "");
+int currentRail = 0;
+bool downDirection = true;
+for (char c : msg) {
+rails[currentRail] += c;
+if (currentRail == 0)
+downDirection = true;
+else if (currentRail == railCount - 1)
+downDirection = false;
+if (downDirection)
+currentRail++;
+else
+currentRail--;
+}
+string ciphertext;
+for (const string& rail : rails) {
+ciphertext += rail;
+}
+cout<<"Encrypted Text : "<<ciphertext<<endl;
+ vector<string> rail(railCount, "");
+    int direction = 1;
+    int row = 0;
+    for (char &c:ciphertext) {
+        rail[row] += '$';
+        if (row == 0) {
+            direction = 1;
+        } else if (row == railCount- 1) {
+            direction = -1;
+        }
+        row += direction;
+    }
+    int ind=0;
+    for(int i=0;i<railCount;i++){
+        for(auto &ch:rail[i]){
+            ch=ciphertext[ind++];
+        }
+    }
+    row-=direction;
+    string res;
+    for(int i=0;i<ciphertext.size();i++){
+        res+=rail[row].back();
+        rail[row].pop_back();
+        if (row == 0) {
+            direction = 1;
+        } else if (row == railCount - 1) {
+            direction = -1;
+        }
+        row += direction;
+    }
+    reverse(res.begin(),res.end());
+    cout<<"Decrypted Message : "<<res<<endl;
+    return;
+}
 
 int main(){
 
@@ -97,8 +197,14 @@ int main(){
     if(choice == 2){
         monoalphabetic(msg);
     }
+    if(choice == 3){
+      vegnere(msg);
+          }
     if(choice == 4){
       vernam(msg);
+    }
+    if(choice == 5){
+      Railfence(msg);
     }
 return 0;
 }
